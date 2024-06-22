@@ -1,8 +1,9 @@
 import { useGameContext } from "../stateManagement";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import { ACTIONTYPES } from "../ActionTypes";
 
-export function Time({ children, stylee, translate }) {
+export function Time({ children, stylee }) {
   const { state, dispatch } = useGameContext();
   const currentAnswer = state.questions[state.questionIndex].answer;
 
@@ -11,11 +12,11 @@ export function Time({ children, stylee, translate }) {
     //we are checking here the question timer and game timer and display popups because we should avoid to send many parameters to Timer() function
     if (state.questionTime === 0) {
       dispatch({
-        type: "SET_DISABLE_BUTTON",
+        type: ACTIONTYPES.SET_DISABLE_BUTTON,
         payload: { buttonName: "nextQuestionButton", value: false }
       });
       dispatch({
-        type: "SET_QUESTIONS",
+        type: ACTIONTYPES.SET_QUESTIONS,
         payload: {
           stateIndex: currentQuestionIndex,
           updatedPlaceholder: currentAnswer

@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Timer, shuffleArray } from "../Utils";
 import Swal from "sweetalert2";
 import { swalSuccess, swalFinishGame } from "../Alerts";
+import { ACTIONTYPES } from "../ActionTypes";
 import { Score } from "./Score";
 import { QuizQuestion } from "./QuizQuestion";
 import { Time } from "./Time";
@@ -22,7 +23,7 @@ export function JoculCuvintelor() {
       { length: currentQuestionSize },
       (_, index) => index
     );
-    dispatch({ type: "SET_INDEX_ARRAY", payload: newIndexArray });
+    dispatch({ type: ACTIONTYPES.SET_INDEX_ARRAY, payload: newIndexArray });
     disableButton("nextQuestionButton", true);
     disableButton("stopTimeButton", false);
     disableButton("askForLetterButton", false);
@@ -40,22 +41,25 @@ export function JoculCuvintelor() {
   function nextQuestion() {
     if (questionIntervalRef.current) clearInterval(questionIntervalRef.current);
     Timer(state.gameTime, dispatch, gameIntervalRef, "game");
-    dispatch({ type: "SET_QUESTION_INDEX" });
-    dispatch({ type: "SET_QUESTION_TIME", payload: false });
-    dispatch({ type: "RESET_QUESTION_TIMER" });
-    dispatch({ type: "SET_IS_ARRAY_SHUFFLED", value: false });
+    dispatch({ type: ACTIONTYPES.SET_QUESTION_INDEX });
+    dispatch({ type: ACTIONTYPES.SET_QUESTION_TIME, payload: false });
+    dispatch({ type: ACTIONTYPES.RESET_QUESTION_TIMER });
+    dispatch({ type: ACTIONTYPES.SET_IS_ARRAY_SHUFFLED, value: false });
   }
 
   function increaseScore() {
-    dispatch({ type: "SET_INCREASE_SCORE" });
+    dispatch({ type: ACTIONTYPES.SET_INCREASE_SCORE });
   }
 
   function decreaseScore() {
-    dispatch({ type: "SET_DECREASE_SCORE" });
+    dispatch({ type: ACTIONTYPES.SET_DECREASE_SCORE });
   }
 
   function disableButton(buttonName, value) {
-    dispatch({ type: "SET_DISABLE_BUTTON", payload: { buttonName, value } });
+    dispatch({
+      type: ACTIONTYPES.SET_DISABLE_BUTTON,
+      payload: { buttonName, value }
+    });
   }
 
   //event handler function
@@ -67,13 +71,16 @@ export function JoculCuvintelor() {
     const isShuffled = state.isArrayShuffled;
     if (!isShuffled) {
       const newArr = shuffleArray(state.wordIndexArray);
-      dispatch({ type: "SET_INDEX_ARRAY", payload: newArr });
-      dispatch({ type: "SET_IS_ARRAY_SHUFFLED", value: true });
+      dispatch({ type: ACTIONTYPES.SET_INDEX_ARRAY, payload: newArr });
+      dispatch({ type: ACTIONTYPES.SET_IS_ARRAY_SHUFFLED, value: true });
     }
     if (state.wordIndexArray.length > 0) {
       const newShuffledArray = [...state.wordIndexArray];
       randIndex = newShuffledArray.pop();
-      dispatch({ type: "SET_INDEX_ARRAY", payload: newShuffledArray });
+      dispatch({
+        type: ACTIONTYPES.SET_INDEX_ARRAY,
+        payload: newShuffledArray
+      });
       decreaseScore();
     }
     const randomLetter = currentQuestion.charAt(randIndex);
@@ -84,7 +91,7 @@ export function JoculCuvintelor() {
     const isLastQuestion = stateIndex === state.questions.length - 1;
 
     dispatch({
-      type: "SET_QUESTIONS",
+      type: ACTIONTYPES.SET_QUESTIONS,
       payload: { stateIndex, updatedPlaceholder }
     });
     if (currentPlaceholder.join("") === currentQuestion) {
@@ -111,7 +118,7 @@ export function JoculCuvintelor() {
     Timer(state.questionTime, dispatch, questionIntervalRef, "question");
     disableButton("askForLetterButton", true);
     disableButton("stopTimeButton", true);
-    dispatch({ type: "SET_QUESTION_TIME", payload: true });
+    dispatch({ type: ACTIONTYPES.SET_QUESTION_TIME, payload: true });
   }
 
   return (

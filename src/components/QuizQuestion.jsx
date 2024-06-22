@@ -2,6 +2,7 @@ import { useCallback, useRef, useEffect } from "react";
 import { useGameContext } from "../stateManagement";
 import Swal from "sweetalert2";
 import { swalSuccess } from "../Alerts";
+import { ACTIONTYPES } from "../ActionTypes";
 
 export function QuizQuestion({ disableButton, increaseScore }) {
   const { state, dispatch } = useGameContext();
@@ -32,7 +33,7 @@ export function QuizQuestion({ disableButton, increaseScore }) {
           const updatedPlaceholder = placeholderArray.join(" ");
           const stateIndex = state.questionIndex;
           dispatch({
-            type: "SET_QUESTIONS",
+            type: ACTIONTYPES.SET_QUESTIONS,
             payload: { stateIndex, updatedPlaceholder }
           });
           //check win on key press
@@ -41,7 +42,7 @@ export function QuizQuestion({ disableButton, increaseScore }) {
             disableButton("stopTimeButton", true);
             disableButton("askForLetterButton", true);
             disableButton("nextQuestionButton", false); //this will be enabled
-            dispatch({ type: "SET_QUESTION_TIME", payload: false });
+            dispatch({ type: ACTIONTYPES.SET_QUESTION_TIME, payload: false });
             Swal.fire(swalSuccess);
           }
         }

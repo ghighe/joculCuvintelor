@@ -4,6 +4,7 @@ import { useGameContext } from "./stateManagement";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { OverLay } from "./components/Overlay";
+import { ACTIONTYPES } from "./ActionTypes";
 
 export default function App() {
   const { state, dispatch } = useGameContext();
@@ -26,12 +27,15 @@ export default function App() {
   }, [state.isBckChanged]);
 
   function changeLanguageHandler(e) {
-    dispatch({ type: "SET_LANGUAGE", value: e.target.value });
+    dispatch({ type: ACTIONTYPES.SET_LANGUAGE, value: e.target.value });
     i18n.changeLanguage(e.target.value);
   }
 
   function changeBckHandler(e) {
-    dispatch({ type: "SET_IS_BACKGROUND_CHANGED", value: e.target.checked });
+    dispatch({
+      type: ACTIONTYPES.SET_IS_BACKGROUND_CHANGED,
+      value: e.target.checked
+    });
   }
 
   return (
