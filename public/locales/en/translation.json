@@ -1,0 +1,10 @@
+{
+  "title": "Words game",
+  "message": "Find the word from {{count}} letters",
+  "score": "score",
+  "time": "time",
+  "stopBtn": "Stop Time",
+  "askBtn": "Ask a letter",
+  "drkMode": "DarkMode",
+  "lgtMode": "LightMode"
+}

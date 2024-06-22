@@ -1,0 +1,10 @@
+{
+  "title": "Jocul Cuvintelor",
+  "message": "Gaseste cuvantul din {{count}} litere",
+  "score": "scor",
+  "time": "timp",
+  "stopBtn": "Opreste Timpul",
+  "askBtn": "Cere o litera",
+  "drkMode": "Mod Intunecat",
+  "lgtMode": "Mod Luminos"
+}
